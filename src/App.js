@@ -7,48 +7,38 @@ class App extends Component {
   state = {
     rows: 10,
     columns: 10,
-    activeX: 5,
-    activeY: 3
+    activeX: 1,
+    activeY: 1
   }
 
-  moveActiveSquare = ({ key }) => {
+  moveActiveSquare = (event) => {
 
-    const { activeX, activeY } = this.state
+    const { key } = event
+    const { rows, columns, activeX, activeY } = this.state
 
     const directions = {
-      ArrowDown: () => this.setState({ activeY: activeY + 1 }),
-      ArrowUp: () => this.setState({ activeY: activeY - 1 }),
-      ArrowRight: () => this.setState({ activeX: activeX + 1 }),
-      ArrowLeft: () => this.setState({ activeX: activeX - 1 }),
+      ArrowDown: () => activeY + 1 < columns 
+        ? this.setState({ activeY: activeY + 1 }) 
+        : null,
+      ArrowUp: () => activeY - 1 >= 0 
+        ? this.setState({ activeY: activeY - 1 }) 
+        : null,
+      ArrowRight: () => activeX + 1 < rows 
+        ? this.setState({ activeX: activeX + 1 }) 
+        : null,
+      ArrowLeft: () => activeX - 1 >= 0 
+        ? this.setState({ activeX: activeX - 1 }) 
+        : null,
+      m: () => this.repeatConsoleLog(),
       default: () => null
     }
 
     return directions[key] || directions.default
+  }
 
-  //   if (key === "ArrowDown") {
-  //     console.log("state of activeY", activeY)
-  //     this.setState({
-  //       activeY: activeY + 1
-  //     })
-  //   }
-  //   if (key === "ArrowUp") {
-  //     console.log("state of activeY", activeY)
-  //     this.setState({
-  //       activeY: activeY - 1
-  //     })
-  //   }
-  //   if (key === "ArrowLeft") {
-  //     console.log("state of activeX", activeX)
-  //     this.setState({
-  //       activeX: activeX - 1
-  //     })
-  //   }
-  //   if (key === "ArrowRight") {
-  //     console.log("state of activeX", activeX)
-  //     this.setState({
-  //       activeX: activeX + 1
-  //     })
-  //   }
+  repeatConsoleLog = () => {
+      console.log("hit")
+      setTimeout(this.repeatConsoleLog, 1000)
   }
 
   render () {

@@ -8,19 +8,27 @@ class App extends Component {
     rows: 10,
     columns: 10,
     activeX: 1,
-    activeY: 1
+    activeY: 1,
+    key: null,
+    running: false
   }
 
-  changeDirection = (event) => {
-    event.persist()
-    this.moveActiveSquare(event)()
-    setTimeout(() => this.changeDirection(event), 1000)
+  setDirection = (event) => {
+    this.setState({key: event.key})
+    if (!this.state.running){
+      this.setState({running: true})
+      this.repeatDirection()
+    }
   }
 
-  moveActiveSquare = (event) => {
+  repeatDirection = () => {
+      this.moveActiveSquare()()
+      setTimeout(() => this.repeatDirection(), 200)
+  }
 
-    const { key } = event
-    const { rows, columns, activeX, activeY } = this.state
+  moveActiveSquare = () => {
+
+    const { rows, columns, activeX, activeY, key } = this.state
 
     const directions = {
       ArrowDown: () => activeY + 1 < columns 
@@ -50,7 +58,7 @@ class App extends Component {
     return (
       <div 
         className="App"
-        onKeyDown={(event) => this.changeDirection(event)}
+        onKeyDown={this.setDirection}
         tabIndex="0"
       >
         <TableOfSquares 

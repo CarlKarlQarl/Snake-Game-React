@@ -11,6 +11,12 @@ class App extends Component {
     activeY: 1
   }
 
+  changeDirection = (event) => {
+    event.persist()
+    this.moveActiveSquare(event)()
+    setTimeout(() => this.changeDirection(event), 1000)
+  }
+
   moveActiveSquare = (event) => {
 
     const { key } = event
@@ -32,7 +38,6 @@ class App extends Component {
       m: () => this.repeatConsoleLog(),
       default: () => null
     }
-
     return directions[key] || directions.default
   }
 
@@ -45,7 +50,7 @@ class App extends Component {
     return (
       <div 
         className="App"
-        onKeyDown={(event) => this.moveActiveSquare(event)()}
+        onKeyDown={(event) => this.changeDirection(event)}
         tabIndex="0"
       >
         <TableOfSquares 

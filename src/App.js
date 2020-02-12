@@ -8,20 +8,8 @@ class App extends Component {
     rows: 10,
     columns: 10,
     snake: [{
-      snakeX: 3,
-      snakeY: 7
-    },{
-      snakeX: 7,
-      snakeY: 3
-    },{
-      snakeX: 5,
-      snakeY: 5
-    },{
-      snakeX: 5,
-      snakeY: 4
-    }, {
-      snakeX: 4,
-      snakeY: 5
+      snakeX: 1,
+      snakeY: 1
     }],
     key: null,
     running: false
@@ -42,30 +30,52 @@ class App extends Component {
 
   moveActiveSquare = () => {
 
-    // const { rows, columns, snake, snake: { snakeX, snakeY }, key } = this.state
+    const { rows, columns, snake, key } = this.state
 
-    // const directions = {
-    //   ArrowDown: () => activeY + 1 < columns 
-    //     ? this.setState({ activeY: activeY + 1 }) 
-    //     : null,
-    //   ArrowUp: () => activeY - 1 >= 0 
-    //     ? this.setState({ activeY: activeY - 1 }) 
-    //     : null,
-    //   ArrowRight: () => activeX + 1 < rows 
-    //     ? this.setState({ activeX: activeX + 1 }) 
-    //     : null,
-    //   ArrowLeft: () => activeX - 1 >= 0 
-    //     ? this.setState({ activeX: activeX - 1 }) 
-    //     : null,
-    //   m: () => this.repeatConsoleLog(),
-    //   default: () => null
-    // }
-    // return directions[key] || directions.default
-  }
-
-  repeatConsoleLog = () => {
-      console.log("hit")
-      setTimeout(this.repeatConsoleLog, 1000)
+    const directions = {
+      ArrowDown: () => snake[0].snakeY + 1 < columns 
+        ? this.setState({
+            snake: [
+              {
+                snakeX: snake[0].snakeX,
+                snakeY: snake[0].snakeY + 1
+              }, ...this.state.snake
+            ]
+          }) 
+        : null,
+      ArrowUp: () => snake[0].snakeY - 1 >= 0 
+        ? this.setState({
+            snake: [
+              {
+                snakeX: snake[0].snakeX,
+                snakeY: snake[0].snakeY - 1
+              }, ...this.state.snake
+            ]
+          }) 
+        : null,
+      ArrowRight: () => snake[0].snakeX + 1 < rows 
+        ? this.setState({
+          snake: [
+            {
+              snakeX: snake[0].snakeX + 1,
+              snakeY: snake[0].snakeY
+            }, ...this.state.snake
+          ]
+        })
+        : null,
+      ArrowLeft: () => snake[0].snakeX - 1 >= 0 
+        ? this.setState({
+          snake: [
+            {
+              snakeX: snake[0].snakeX - 1,
+              snakeY: snake[0].snakeY
+            }, ...this.state.snake
+          ]
+        })
+        : null,
+      default: () => null
+    }
+    return directions[key] || directions.default
   }
 
   render () {

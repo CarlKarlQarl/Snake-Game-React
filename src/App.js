@@ -7,8 +7,22 @@ class App extends Component {
   state = {
     rows: 10,
     columns: 10,
-    activeX: 1,
-    activeY: 1,
+    snake: [{
+      snakeX: 3,
+      snakeY: 7
+    },{
+      snakeX: 7,
+      snakeY: 3
+    },{
+      snakeX: 5,
+      snakeY: 5
+    },{
+      snakeX: 5,
+      snakeY: 4
+    }, {
+      snakeX: 4,
+      snakeY: 5
+    }],
     key: null,
     running: false
   }
@@ -28,25 +42,25 @@ class App extends Component {
 
   moveActiveSquare = () => {
 
-    const { rows, columns, activeX, activeY, key } = this.state
+    // const { rows, columns, snake, snake: { snakeX, snakeY }, key } = this.state
 
-    const directions = {
-      ArrowDown: () => activeY + 1 < columns 
-        ? this.setState({ activeY: activeY + 1 }) 
-        : null,
-      ArrowUp: () => activeY - 1 >= 0 
-        ? this.setState({ activeY: activeY - 1 }) 
-        : null,
-      ArrowRight: () => activeX + 1 < rows 
-        ? this.setState({ activeX: activeX + 1 }) 
-        : null,
-      ArrowLeft: () => activeX - 1 >= 0 
-        ? this.setState({ activeX: activeX - 1 }) 
-        : null,
-      m: () => this.repeatConsoleLog(),
-      default: () => null
-    }
-    return directions[key] || directions.default
+    // const directions = {
+    //   ArrowDown: () => activeY + 1 < columns 
+    //     ? this.setState({ activeY: activeY + 1 }) 
+    //     : null,
+    //   ArrowUp: () => activeY - 1 >= 0 
+    //     ? this.setState({ activeY: activeY - 1 }) 
+    //     : null,
+    //   ArrowRight: () => activeX + 1 < rows 
+    //     ? this.setState({ activeX: activeX + 1 }) 
+    //     : null,
+    //   ArrowLeft: () => activeX - 1 >= 0 
+    //     ? this.setState({ activeX: activeX - 1 }) 
+    //     : null,
+    //   m: () => this.repeatConsoleLog(),
+    //   default: () => null
+    // }
+    // return directions[key] || directions.default
   }
 
   repeatConsoleLog = () => {
@@ -64,8 +78,7 @@ class App extends Component {
         <TableOfSquares 
           rows={this.state.rows} 
           columns={this.state.columns} 
-          activeX={this.state.activeX}
-          activeY={this.state.activeY}
+          snake={this.state.snake}
         />
       </div>
     );

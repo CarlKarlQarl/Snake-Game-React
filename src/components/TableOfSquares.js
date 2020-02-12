@@ -1,15 +1,19 @@
 import React from 'react'
 import RowOfSquares from './RowOfSquares'
 
-export default function TableOfSquares({ rows, columns, activeX, activeY }) {
+export default function TableOfSquares({ rows, columns, snake }) {
 
+    console.log("snake at table", snake)
     let theTable = []
     for (let i = 0; i < columns; i++){
         theTable.push(
             <RowOfSquares 
                 rows={rows} 
                 key={i} 
-                activeX={i === activeY ? activeX : null}
+                // snake={i === snake[0].snakeY ? snake : null}
+                snake={snake.filter(coords => {
+                    return i === coords.snakeY
+                })}
             />
         )
     }

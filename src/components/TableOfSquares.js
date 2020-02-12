@@ -10,7 +10,6 @@ export default function TableOfSquares({ rows, columns, snake }) {
             <RowOfSquares 
                 rows={rows} 
                 key={i} 
-                // snake={i === snake[0].snakeY ? snake : null}
                 snake={snake.filter(coords => {
                     return i === coords.snakeY
                 })}

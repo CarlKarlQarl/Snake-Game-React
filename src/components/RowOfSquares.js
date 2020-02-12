@@ -9,7 +9,6 @@ export default function RowOfSquares({ rows, snake }) {
         theRow.push(
             <Square 
                 key={i}
-                // active={snake && i === snake[0].snakeX ? true : false}
                 active={snake.find(coords => {
                     return i === coords.snakeX
                 })}

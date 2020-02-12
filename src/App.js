@@ -11,6 +11,7 @@ class App extends Component {
       snakeX: 1,
       snakeY: 1
     }],
+    length: 5,
     key: null,
     running: false
   }
@@ -30,7 +31,7 @@ class App extends Component {
 
   moveActiveSquare = () => {
 
-    const { rows, columns, snake, key } = this.state
+    const { rows, columns, snake, length, key } = this.state
 
     const directions = {
       ArrowDown: () => snake[0].snakeY + 1 < columns 
@@ -39,7 +40,7 @@ class App extends Component {
               {
                 snakeX: snake[0].snakeX,
                 snakeY: snake[0].snakeY + 1
-              }, ...this.state.snake
+              }, ...this.state.snake.slice(0,length)
             ]
           }) 
         : null,
@@ -49,7 +50,7 @@ class App extends Component {
               {
                 snakeX: snake[0].snakeX,
                 snakeY: snake[0].snakeY - 1
-              }, ...this.state.snake
+              }, ...this.state.snake.slice(0,length)
             ]
           }) 
         : null,
@@ -59,7 +60,7 @@ class App extends Component {
             {
               snakeX: snake[0].snakeX + 1,
               snakeY: snake[0].snakeY
-            }, ...this.state.snake
+            }, ...this.state.snake.slice(0,length)
           ]
         })
         : null,
@@ -69,7 +70,7 @@ class App extends Component {
             {
               snakeX: snake[0].snakeX - 1,
               snakeY: snake[0].snakeY
-            }, ...this.state.snake
+            }, ...this.state.snake.slice(0,length)
           ]
         })
         : null,

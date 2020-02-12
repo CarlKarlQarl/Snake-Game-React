@@ -12,6 +12,10 @@ class App extends Component {
       snakeY: 1
     }],
     length: 5,
+    food: [{
+      foodX: 1,
+      foodY: 6
+    }],
     key: null,
     running: false
   }
@@ -25,58 +29,153 @@ class App extends Component {
   }
 
   repeatDirection = () => {
-      this.moveActiveSquare()()
-      setTimeout(() => this.repeatDirection(), 200)
+
+    // const { snake, food } = this.state
+    // const { snakeX, snakeY } = snake[0]
+    // const { foodX, foodY } = food[0]
+
+    this.moveActiveSquare()()
+
+    //Collision
+    // if (snakeX === foodX && snakeY === foodY) {
+    //   console.log("hit")
+    //   this.setState({
+    //     length: this.state.length + 1
+    //   })
+    // }
+    
+    setTimeout(() => this.repeatDirection(), 200)
   }
 
   moveActiveSquare = () => {
 
-    const { rows, columns, snake, length, key } = this.state
+    const { rows, columns, snake, key } = this.state
+    const { snakeX, snakeY } = snake[0]
 
     const directions = {
-      ArrowDown: () => snake[0].snakeY + 1 < columns 
-        ? this.setState({
-            snake: [
-              {
-                snakeX: snake[0].snakeX,
-                snakeY: snake[0].snakeY + 1
-              }, ...this.state.snake.slice(0,length)
-            ]
-          }) 
+      ArrowDown: () => snakeY + 1 < columns 
+        ? this.moveDown()
         : null,
-      ArrowUp: () => snake[0].snakeY - 1 >= 0 
-        ? this.setState({
-            snake: [
-              {
-                snakeX: snake[0].snakeX,
-                snakeY: snake[0].snakeY - 1
-              }, ...this.state.snake.slice(0,length)
-            ]
-          }) 
+      ArrowUp: () => snakeY - 1 >= 0 
+        ? this.moveUp()
         : null,
-      ArrowRight: () => snake[0].snakeX + 1 < rows 
-        ? this.setState({
-          snake: [
-            {
-              snakeX: snake[0].snakeX + 1,
-              snakeY: snake[0].snakeY
-            }, ...this.state.snake.slice(0,length)
-          ]
-        })
+      ArrowRight: () => snakeX + 1 < rows 
+        ? this.moveRight()
         : null,
-      ArrowLeft: () => snake[0].snakeX - 1 >= 0 
-        ? this.setState({
-          snake: [
-            {
-              snakeX: snake[0].snakeX - 1,
-              snakeY: snake[0].snakeY
-            }, ...this.state.snake.slice(0,length)
-          ]
-        })
+      ArrowLeft: () => snakeX - 1 >= 0 
+        ? this.moveLeft()
         : null,
       default: () => null
     }
     return directions[key] || directions.default
+  }
+
+  moveDown = () => {
+    const { rows, columns, snake, length, food } = this.state
+    const { snakeX, snakeY } = snake[0]
+    const { foodX, foodY } = food[0]
+
+    this.setState({
+      snake: [
+        {
+          snakeX: snakeX,
+          snakeY: snakeY + 1
+        }, ...this.state.snake.slice(0,length)
+      ]
+    })
+
+    //Collision
+    if (snakeX === foodX && snakeY + 1 === foodY) {
+      console.log("hit", foodX, foodY)
+      this.setState({
+        length: this.state.length + 1,
+        food: [{
+          foodX: Math.floor(Math.random() * rows),
+          foodY: Math.floor(Math.random() * columns)
+        }]
+      })
+    }
+  }
+
+  moveUp = () => {
+    const { rows, columns, snake, length, food } = this.state
+    const { snakeX, snakeY } = snake[0]
+    const { foodX, foodY } = food[0]
+
+    this.setState({
+      snake: [
+        {
+          snakeX: snakeX,
+          snakeY: snakeY - 1
+        }, ...this.state.snake.slice(0,length)
+      ]
+    })
+
+    //Collision
+    if (snakeX === foodX && snakeY - 1 === foodY) {
+      console.log("hit", foodX, foodY)
+      this.setState({
+        length: this.state.length + 1,
+        food: [{
+          foodX: Math.floor(Math.random() * rows),
+          foodY: Math.floor(Math.random() * columns)
+        }]
+      })
+    }
+  }
+
+  moveRight = () => {
+    const { rows, columns, snake, length, food } = this.state
+    const { snakeX, snakeY } = snake[0]
+    const { foodX, foodY } = food[0]
+
+    this.setState({
+      snake: [
+        {
+          snakeX: snakeX + 1,
+          snakeY: snakeY
+        }, ...this.state.snake.slice(0,length)
+      ]
+    })
+
+    //Collision
+    if (snakeX + 1 === foodX && snakeY === foodY) {
+      console.log("hit", foodX, foodY)
+      this.setState({
+        length: this.state.length + 1,
+        food: [{
+          foodX: Math.floor(Math.random() * rows),
+          foodY: Math.floor(Math.random() * columns)
+        }]
+      })
+    }
+  }
+
+  moveLeft = () => {
+    const { rows, columns, snake, length, food } = this.state
+    const { snakeX, snakeY } = snake[0]
+    const { foodX, foodY } = food[0]
+
+    this.setState({
+      snake: [
+        {
+          snakeX: snakeX - 1,
+          snakeY: snakeY
+        }, ...this.state.snake.slice(0,length)
+      ]
+    })
+
+    //Collision
+    if (snakeX - 1 === foodX && snakeY === foodY) {
+      console.log("hit", foodX, foodY)
+      this.setState({
+        length: this.state.length + 1,
+        food: [{
+          foodX: Math.floor(Math.random() * rows),
+          foodY: Math.floor(Math.random() * columns)
+        }]
+      })
+    }
   }
 
   render () {
@@ -90,6 +189,7 @@ class App extends Component {
           rows={this.state.rows} 
           columns={this.state.columns} 
           snake={this.state.snake}
+          food={this.state.food}
         />
       </div>
     );

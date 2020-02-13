@@ -1,11 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One&display=swap');
+
 * {
   box-sizing: border-box;
+  background-color: rgb(135, 131, 209);
+  font-family: 'Fredoka One', cursive;
 }
 
 .Square-div {
   width: 50px;
   height: 50px;
-  background-color: black;
+  background-color: rgb(141, 166, 162);
   margin: 1px;
 }
 

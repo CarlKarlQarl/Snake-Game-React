@@ -2,9 +2,8 @@ import React from 'react'
 
 export default function PlayerStats({ score }) {
     return (
-        <div>
-            <h1>Score:</h1>
-            <h1>{score}</h1>
+        <div className="score-div">
+            <h1>Score: {score}</h1>
         </div>
     )
 }

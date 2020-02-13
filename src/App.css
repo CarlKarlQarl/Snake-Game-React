@@ -15,10 +15,18 @@
   justify-content: center;
 }
 
-.snake {
+.snake-green {
   background-color: green;
+}
+.snake-lightgreen {
+  background-color: lightgreen;
 }
 
 .food {
   background-color: red;
+}
+
+.score-div{
+  display: flex;
+  justify-content: center;
 }

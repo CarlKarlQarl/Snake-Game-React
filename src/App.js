@@ -20,6 +20,8 @@ class App extends Component {
     key: null,
     running: false,
     score: 0,
+    // https://www.youtube.com/watch?v=i4VqXRRXi68
+    bonus: 52,
     gameOver: false
   }
 
@@ -74,7 +76,8 @@ class App extends Component {
           snakeX: snakeX,
           snakeY: snakeY + 1
         }, ...this.state.snake.slice(0,length)
-      ]
+      ],
+      bonus: this.state.bonus - 1 >= 0 ? this.state.bonus - 1 : 0
     })
 
     //Collision with food
@@ -86,7 +89,8 @@ class App extends Component {
           foodX: Math.floor(Math.random() * rows),
           foodY: Math.floor(Math.random() * columns)
         }],
-        score: this.state.score + this.state.length
+        score: this.state.score + this.state.length + this.state.bonus,
+        bonus: 52
       })
     }
 
@@ -107,10 +111,11 @@ class App extends Component {
           snakeX: snakeX,
           snakeY: snakeY - 1
         }, ...this.state.snake.slice(0,length)
-      ]
+      ],
+      bonus: this.state.bonus - 1 >= 0 ? this.state.bonus - 1 : 0
     })
 
-    //Collision
+    //Collision with food
     if (snakeX === foodX && snakeY - 1 === foodY) {
       console.log("hit", foodX, foodY)
       this.setState({
@@ -119,7 +124,8 @@ class App extends Component {
           foodX: Math.floor(Math.random() * rows),
           foodY: Math.floor(Math.random() * columns)
         }],
-        score: this.state.score + this.state.length
+        score: this.state.score + this.state.length + this.state.bonus,
+        bonus: 52
       })
     }
 
@@ -140,10 +146,11 @@ class App extends Component {
           snakeX: snakeX + 1,
           snakeY: snakeY
         }, ...this.state.snake.slice(0,length)
-      ]
+      ],
+      bonus: this.state.bonus - 1 >= 0 ? this.state.bonus - 1 : 0
     })
 
-    //Collision
+    //Collision with food
     if (snakeX + 1 === foodX && snakeY === foodY) {
       console.log("hit", foodX, foodY)
       this.setState({
@@ -152,7 +159,8 @@ class App extends Component {
           foodX: Math.floor(Math.random() * rows),
           foodY: Math.floor(Math.random() * columns)
         }],
-        score: this.state.score + this.state.length
+        score: this.state.score + this.state.length + this.state.bonus,
+        bonus: 52
       })
     }
 
@@ -173,10 +181,11 @@ class App extends Component {
           snakeX: snakeX - 1,
           snakeY: snakeY
         }, ...this.state.snake.slice(0,length)
-      ]
+      ],
+      bonus: this.state.bonus - 1 >= 0 ? this.state.bonus - 1 : 0
     })
 
-    //Collision
+    //Collision with food
     if (snakeX - 1 === foodX && snakeY === foodY) {
       console.log("hit", foodX, foodY)
       this.setState({
@@ -185,7 +194,8 @@ class App extends Component {
           foodX: Math.floor(Math.random() * rows),
           foodY: Math.floor(Math.random() * columns)
         }],
-        score: this.state.score + this.state.length
+        score: this.state.score + this.state.length + this.state.bonus,
+        bonus: 52
       })
     }
 

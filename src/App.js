@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import TableOfSquares from "./components/TableOfSquares"
+import PlayerStats from './components/PlayerStats';
 
 class App extends Component {
 
@@ -17,34 +18,26 @@ class App extends Component {
       foodY: 6
     }],
     key: null,
-    running: false
+    running: false,
+    score: 0,
+    gameOver: false
   }
 
   setDirection = (event) => {
-    this.setState({key: event.key})
-    if (!this.state.running){
-      this.setState({running: true})
-      this.repeatDirection()
+    if (!this.state.gameOver){
+      this.setState({key: event.key})
+      if (!this.state.running){
+        this.setState({running: true})
+        this.repeatDirection()
+      }
     }
   }
 
   repeatDirection = () => {
-
-    // const { snake, food } = this.state
-    // const { snakeX, snakeY } = snake[0]
-    // const { foodX, foodY } = food[0]
-
-    this.moveActiveSquare()()
-
-    //Collision
-    // if (snakeX === foodX && snakeY === foodY) {
-    //   console.log("hit")
-    //   this.setState({
-    //     length: this.state.length + 1
-    //   })
-    // }
-    
-    setTimeout(() => this.repeatDirection(), 200)
+    if (!this.state.gameOver){
+      this.moveActiveSquare()()
+      setTimeout(() => this.repeatDirection(), 175)
+    }
   }
 
   moveActiveSquare = () => {
@@ -55,16 +48,16 @@ class App extends Component {
     const directions = {
       ArrowDown: () => snakeY + 1 < columns 
         ? this.moveDown()
-        : null,
+        : this.setState({gameOver: true}),
       ArrowUp: () => snakeY - 1 >= 0 
         ? this.moveUp()
-        : null,
+        : this.setState({gameOver: true}),
       ArrowRight: () => snakeX + 1 < rows 
         ? this.moveRight()
-        : null,
+        : this.setState({gameOver: true}),
       ArrowLeft: () => snakeX - 1 >= 0 
         ? this.moveLeft()
-        : null,
+        : this.setState({gameOver: true}),
       default: () => null
     }
     return directions[key] || directions.default
@@ -84,16 +77,22 @@ class App extends Component {
       ]
     })
 
-    //Collision
+    //Collision with food
     if (snakeX === foodX && snakeY + 1 === foodY) {
-      console.log("hit", foodX, foodY)
+      console.log("hit food", foodX, foodY)
       this.setState({
         length: this.state.length + 1,
         food: [{
           foodX: Math.floor(Math.random() * rows),
           foodY: Math.floor(Math.random() * columns)
-        }]
+        }],
+        score: this.state.score + this.state.length
       })
+    }
+
+    //Collision with self
+    if (snake.find(segment => {return snakeX === segment.snakeX && snakeY + 1 === segment.snakeY})) {
+      this.setState({gameOver: true})
     }
   }
 
@@ -119,8 +118,14 @@ class App extends Component {
         food: [{
           foodX: Math.floor(Math.random() * rows),
           foodY: Math.floor(Math.random() * columns)
-        }]
+        }],
+        score: this.state.score + this.state.length
       })
+    }
+
+    //Collision with self
+    if (snake.find(segment => {return snakeX === segment.snakeX && snakeY - 1 === segment.snakeY})){
+      this.setState({gameOver: true})
     }
   }
 
@@ -146,8 +151,14 @@ class App extends Component {
         food: [{
           foodX: Math.floor(Math.random() * rows),
           foodY: Math.floor(Math.random() * columns)
-        }]
+        }],
+        score: this.state.score + this.state.length
       })
+    }
+
+    //Collision with self
+    if (snake.find(segment => {return snakeX + 1 === segment.snakeX && snakeY === segment.snakeY})){
+      this.setState({gameOver: true})
     }
   }
 
@@ -173,9 +184,21 @@ class App extends Component {
         food: [{
           foodX: Math.floor(Math.random() * rows),
           foodY: Math.floor(Math.random() * columns)
-        }]
+        }],
+        score: this.state.score + this.state.length
       })
     }
+
+    //Collision with self
+    if (snake.find(segment => {return snakeX - 1 === segment.snakeX && snakeY === segment.snakeY})){
+      this.setState({gameOver: true})
+    }
+  }
+
+  updateScore = (points) => {
+    this.setState({
+      score: this.state.score + points
+    })
   }
 
   render () {
@@ -185,6 +208,9 @@ class App extends Component {
         onKeyDown={this.setDirection}
         tabIndex="0"
       >
+        <PlayerStats 
+          score={this.state.score}
+        />
         <TableOfSquares 
           rows={this.state.rows} 
           columns={this.state.columns} 

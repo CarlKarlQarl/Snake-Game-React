@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import TableOfSquares from "./components/TableOfSquares"
 import PlayerStats from './components/PlayerStats';
+import GameOver from './components/GameOver';
 
 class App extends Component {
 
@@ -9,13 +10,13 @@ class App extends Component {
     rows: 10,
     columns: 10,
     snake: [{
-      snakeX: 1,
-      snakeY: 1
+      snakeX: 2,
+      snakeY: 4
     }],
-    length: 5,
+    length: 2,
     food: [{
-      foodX: 1,
-      foodY: 6
+      foodX: 7,
+      foodY: 4
     }],
     key: null,
     running: false,
@@ -205,9 +206,22 @@ class App extends Component {
     }
   }
 
-  updateScore = (points) => {
+  restartGame = () => {
     this.setState({
-      score: this.state.score + points
+      snake: [{
+        snakeX: 2,
+        snakeY: 4
+      }],
+      length: 2,
+      food: [{
+        foodX: 7,
+        foodY: 4
+      }],
+      key: null,
+      running: false,
+      score: 0,
+      bonus: 52,
+      gameOver: false
     })
   }
 
@@ -226,6 +240,10 @@ class App extends Component {
           columns={this.state.columns} 
           snake={this.state.snake}
           food={this.state.food}
+        />
+        <GameOver
+          gameOver={this.state.gameOver}
+          restartGame={this.restartGame}
         />
       </div>
     );

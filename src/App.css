@@ -6,6 +6,39 @@
   font-family: 'Fredoka One', cursive;
 }
 
+.modal{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: green;
+  border-style: dashed;
+  border-color: lightgreen;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 10px;
+}
+
+.game-over-label{
+  background-color: green;
+}
+
+.game-over-button{
+  background-color: lightgreen;
+}
+
+.hidden{
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+.visible{
+  visibility: visible;
+  opacity: 1;
+}
+
 .Square-div {
   width: 50px;
   height: 50px;

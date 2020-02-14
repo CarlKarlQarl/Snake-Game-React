@@ -80,7 +80,7 @@ button {
   border-color: rgb(135, 131, 209);
   border-width: 1px;
   border-radius: 15px;
-  cursor: none;
+  /* cursor: none; */
 }
 
 .RowOfSquares-div {

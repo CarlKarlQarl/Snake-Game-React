@@ -267,12 +267,12 @@ class App extends Component {
             onClick={this.displayInstructions}
           >Learn How To Play</button>
         </div>
-        <Instructions 
-          showInstructions={this.state.showInstructions}
-        />
         <GameOver
           gameOver={this.state.gameOver}
           restartGame={this.restartGame}
+        />
+        <Instructions 
+          showInstructions={this.state.showInstructions}
         />
       </div>
     );

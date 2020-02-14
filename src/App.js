@@ -3,6 +3,7 @@ import './App.css';
 import TableOfSquares from "./components/TableOfSquares"
 import PlayerStats from './components/PlayerStats';
 import GameOver from './components/GameOver';
+import Instructions from './components/Instructions';
 
 class App extends Component {
 
@@ -23,7 +24,8 @@ class App extends Component {
     score: 0,
     // https://www.youtube.com/watch?v=i4VqXRRXi68
     bonus: 52,
-    gameOver: false
+    gameOver: false,
+    showInstructions: false
   }
 
   setDirection = (event) => {
@@ -225,6 +227,12 @@ class App extends Component {
     })
   }
 
+  displayInstructions = () => {
+    this.setState({
+      showInstructions: !this.state.showInstructions
+    })
+  }
+
   render () {
     return (
       <div 
@@ -240,6 +248,15 @@ class App extends Component {
           columns={this.state.columns} 
           snake={this.state.snake}
           food={this.state.food}
+        />
+        <div className="button-container">
+          <button
+            className="instructions-button"
+            onClick={this.displayInstructions}
+          >Learn How To Play</button>
+        </div>
+        <Instructions 
+          showInstructions={this.state.showInstructions}
         />
         <GameOver
           gameOver={this.state.gameOver}

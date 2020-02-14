@@ -11,6 +11,10 @@
   flex-direction: column;
 }
 
+.App:focus{
+  outline: none;
+}
+
 .modal{
   position: fixed;
   top: 46%;

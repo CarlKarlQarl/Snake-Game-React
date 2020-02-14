@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import './App.css';
 import TableOfSquares from "./components/TableOfSquares"
 import PlayerStats from './components/PlayerStats';
@@ -26,6 +26,16 @@ class App extends Component {
     bonus: 52,
     gameOver: false,
     showInstructions: false
+  }
+
+  gamespace = createRef();
+
+  componentDidMount = () => {
+    this.gamespace.current.focus()
+  }
+
+  componentDidUpdate = () => {
+    this.gamespace.current.focus()
   }
 
   setDirection = (event) => {
@@ -234,8 +244,10 @@ class App extends Component {
   }
 
   render () {
+    console.log(this.gamespace)
     return (
       <div 
+        ref={this.gamespace}
         className="App"
         onKeyDown={this.setDirection}
         tabIndex="0"

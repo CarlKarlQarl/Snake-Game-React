@@ -43,13 +43,20 @@
   width: 50px;
   height: 50px;
   background-color: rgb(141, 166, 162);
-  margin: 1px;
+  border-style: solid;
+  border-color: rgb(135, 131, 209);
+  border-width: 1px;
+  cursor: none;
 }
 
 .RowOfSquares-div {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.TableOfSquares-div{
+  
 }
 
 .snake-green {

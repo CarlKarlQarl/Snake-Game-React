@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Fredoka+One&display=swap');
+/* https://coolors.co/ff0000-008000-90ee90-8da6a2-8783d1 */
 
 * {
   box-sizing: border-box;
@@ -35,11 +36,13 @@ button {
 }
 
 .game-over-label{
+  margin: 5px;
   background-color: green;
 }
 
 .game-over-button{
   background-color: lightgreen;
+  margin-top: 10px;
 }
 
 .instructions p{
@@ -107,4 +110,36 @@ button {
 
 .score-div h1 {
   margin: 10px;
+}
+
+.highscore-labels{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom-style: dashed;
+  border-color: lightgreen;
+}
+
+.highscore-labels p{
+  margin: 5px;
+}
+
+.user-scores{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.user-scores p{
+  margin: 5px;
+}
+
+.scoreboard{
+  border-style: dashed;
+  border-color: lightgreen;
+}
+
+::placeholder{
+  color: red;
+  opacity: 0.5;
 }

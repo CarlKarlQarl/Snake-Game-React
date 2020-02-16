@@ -25,13 +25,27 @@ class App extends Component {
     // https://www.youtube.com/watch?v=i4VqXRRXi68
     bonus: 52,
     gameOver: false,
-    showInstructions: false
+    showInstructions: false,
+    highscores: []
   }
 
   gamespace = createRef();
 
   componentDidMount = () => {
     this.gamespace.current.focus()
+    fetch(`http://localhost:3000/scores`)
+      .then(response => response.json())
+      .then(scores => {
+        scores.forEach(score => {
+          this.setState({
+            highscores:[...this.state.highscores, {
+              initials: score.initials,
+              points: score.points
+            }]
+          })
+        })
+      })
+      .catch(error => console.log(error))
   }
 
   componentDidUpdate = () => {
@@ -130,7 +144,7 @@ class App extends Component {
 
     //Collision with food
     if (snakeX === foodX && snakeY - 1 === foodY) {
-      console.log("hit", foodX, foodY)
+      // console.log("hit", foodX, foodY)
       this.setState({
         length: this.state.length + 1,
         food: [{
@@ -165,7 +179,7 @@ class App extends Component {
 
     //Collision with food
     if (snakeX + 1 === foodX && snakeY === foodY) {
-      console.log("hit", foodX, foodY)
+      // console.log("hit", foodX, foodY)
       this.setState({
         length: this.state.length + 1,
         food: [{
@@ -200,7 +214,7 @@ class App extends Component {
 
     //Collision with food
     if (snakeX - 1 === foodX && snakeY === foodY) {
-      console.log("hit", foodX, foodY)
+      // console.log("hit", foodX, foodY)
       this.setState({
         length: this.state.length + 1,
         food: [{
@@ -243,8 +257,31 @@ class App extends Component {
     })
   }
 
+  postNewScore = (event) => {
+    fetch("http://localhost:3000/scores", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        highscore: {
+          initials: event.target.initials.value,
+          points: this.state.score
+        }
+      })
+    })
+      .then(
+        this.setState({
+          highscores:[...this.state.highscores, {
+            initials: event.target.initials.value,
+            points: this.state.score
+          }]
+        })
+      )
+      .catch(error => console.log(error))
+  }
+
   render () {
-    console.log(this.gamespace)
     return (
       <div 
         ref={this.gamespace}
@@ -270,6 +307,8 @@ class App extends Component {
         <GameOver
           gameOver={this.state.gameOver}
           restartGame={this.restartGame}
+          highscores={this.state.highscores}
+          postNewScore={this.postNewScore}
         />
         <Instructions 
           showInstructions={this.state.showInstructions}

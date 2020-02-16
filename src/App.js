@@ -33,7 +33,7 @@ class App extends Component {
 
   componentDidMount = () => {
     this.gamespace.current.focus()
-    fetch(`http://localhost:3000/scores`)
+    fetch(`https://snake-game-rails.herokuapp.com/scores`)
       .then(response => response.json())
       .then(scores => {
         scores.forEach(score => {
@@ -258,7 +258,7 @@ class App extends Component {
   }
 
   postNewScore = (event) => {
-    fetch("http://localhost:3000/scores", {
+    fetch("https://snake-game-rails.herokuapp.com/scores", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

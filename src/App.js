@@ -33,7 +33,8 @@ class App extends Component {
 
   componentDidMount = () => {
     this.gamespace.current.focus()
-    fetch(`https://snake-game-rails.herokuapp.com/scores`)
+    //local testing
+    fetch(`http://localhost:3000/scores`)
       .then(response => response.json())
       .then(scores => {
         scores.forEach(score => {
